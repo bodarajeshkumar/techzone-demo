@@ -1,0 +1,20 @@
+artifact_id,description,name,steward_ids,tags
+8837f312-b9ba-4e89-8b8f-f76ceba5130b,Postalische Adresse wie zum Beispiel der Wohnort einer Person,Post Adresse,[],[]
+cdc87b04-8368-4e97-82be-320220aed48f,Geschlecht einer natürlichen Person,Geschlecht,[],[]
+c4e7f896-0ae5-464a-a61e-78d929bb1313,Datum an dem eine Person geboren wurde,Geburtsdatum,[],"['tag1', 'tag2', 'tag3']"
+6e90e84a-6580-43d0-9cb3-c8ca546a42a9,Datum an dem eine Person verstorben ist,Sterbedatum,[],[]
+652a0fc6-44b9-4dfb-8c65-edc8eaebc64d,Ort der Adresse,Ort,[],[]
+6c408a41-380d-49a0-80d1-f869f5cb82b4,"Adresse unter der eine Person erreicht werden kann
+
+Reihenfolge (falls ID = 5 Null ist):
+1. Meldeadresse (Typ 5), 2. Zustelladresse (Typ 6), 3. Firmenanschrift (Typ 3),
+4. Bevollmächtigtenadresse (Typ 1),
+5. Zweitwohnsitz (Typ 7), 6. Mahnadresse (Typ 4), 7. Ferienadresse (Typ 2)",Adresse,[],[]
+5a470a4a-d930-4010-a7a1-5c86f730b305,Melde Adresse,Meldeadresse,[],[]
+4fc85b2c-a8af-4105-bf1b-f8e255ecccab,Telekommunikations Adresse für elektronische Kommunikation,Telekom Adresse,[],[]
+a8a3b85e-d543-4bc1-aa1e-ae22b42b3317,NaN,Natürliche Person,['1000331001'],[]
+1b1e0f33-63f5-494b-9336-f23bac09b520,Person mit einem aktiven Versichertenstatus,Versicherte Person,[],[]
+2de2e071-1c79-42f0-94ba-ecc6ad2d0ff1,Postleitzahl der Adresse,Postleitzahl,[],[]
+281410f5-b068-47ec-8c6a-fd879915a733,Zustelladresse,Zustelladresse,[],[]
+30d70df5-7928-42a1-91c6-86509d44f656,Straße der Adresse,Straße,[],[]
+64ad30b9-1476-48a8-a1cf-f323a87bc92c,Personennamen (Anthroponyme) sind Namen für Einzelwesen und Gruppen von Einzelwesen. Hier werden allgemeine Artikel zur Namenskunde und Artikel über einzelne Namen oder Namensbestandteile gesammelt. ,Person Name,[],[]

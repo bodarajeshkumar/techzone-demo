@@ -1,0 +1,20 @@
+artifact_id,description,name,steward_ids,tags
+008bcb16-0217-4951-a583-9d6e6baaa00d,Telekommunikations Adresse für elektronische Kommunikation,Telekom Adresse,[],['Demo']
+e02d9f9c-f2e2-4236-afe8-9a0668f1680f,Postleitzahl der Adresse,Postleitzahl,[],['Demo']
+ade0ab74-0cd2-407e-aba1-cfeb4412184e,Zustelladresse,Zustelladresse,[],['Demo']
+cc5e1396-5ed5-4501-a219-a18f93247ed9,Personennamen (Anthroponyme) sind Namen für Einzelwesen und Gruppen von Einzelwesen. Hier werden allgemeine Artikel zur Namenskunde und Artikel über einzelne Namen oder Namensbestandteile gesammelt.,Person Name,[],['Demo']
+581d85df-7af1-4562-9114-f08f521f1f51,Person mit einem aktiven Versichertenstatus,Versicherte Person,[],['Demo']
+48830ad4-9320-4623-b44b-d1b319db0da6,Datum an dem eine Person geboren wurde,Geburtsdatum,[],"['tag1', 'tag2', 'tag3', 'Demo']"
+f5c61798-7226-445c-99fa-eb600a06c006,Postalische Adresse wie zum Beispiel der Wohnort einer Person,Post Adresse,[],['Demo']
+59245518-41eb-4fed-96f8-97830bc50af8,Datum an dem eine Person verstorben ist,Sterbedatum,[],['Demo']
+efe7e0a6-d7b3-4371-8ac9-7765a7a55564,Ort der Adresse,Ort,[],['Demo']
+28fb63dd-84e1-4ac7-b538-90ae9a4b75f8,Straße der Adresse,Straße,[],['Demo']
+cfc88c9f-98ab-4578-bdf9-8ecb6ce7b236,"Adresse unter der eine Person erreicht werden kann
+
+Reihenfolge (falls ID = 5 Null ist):
+1. Meldeadresse (Typ 5), 2. Zustelladresse (Typ 6), 3. Firmenanschrift (Typ 3),
+4. Bevollmächtigtenadresse (Typ 1),
+5. Zweitwohnsitz (Typ 7), 6. Mahnadresse (Typ 4), 7. Ferienadresse (Typ 2)",Adresse,[],"['Demo']"
+d3543159-b0a8-45d6-80b3-119f3df1823a,Melde Adresse,Meldeadresse,[],['Demo']
+fda0b887-f7e9-4f6d-af04-e99e8e42db78,Geschlecht einer natürlichen Person,Geschlecht,[],"['TK','Demo']"
+b529be7f-d4f5-44ff-9733-9792186844bd,NaN,Natürliche Person,['1000331001'],"['TK','Demo']"

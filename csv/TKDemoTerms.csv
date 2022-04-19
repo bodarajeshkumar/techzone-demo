@@ -1,0 +1,3 @@
+artifact_id,description,name,steward_ids,tags
+fceb5c04-cdae-49e3-840a-1d3997023f3e,Ein Eintrag der ein Datum enthält,Datum,['1000331001'],['TKR']
+30c920d8-9d28-4ddb-9521-55d10410122f,"Oberbegriff für alle Personentypen, natürliche wie juristische oder versicherte Personen",Person,['1000331001'],"['TAG1', 'TAG2']"
