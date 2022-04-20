@@ -22,16 +22,16 @@ import requests
 import tarfile
 import zipfile
 from IPython.core.display import display, HTML
-
+from decouple import config
 
 # ## CPD Credentials
 
 # In[2]:
 
 
-CPD_USER_NAME = 'admin'
-CPD_USER_PASSWORD = 'CP4DDataFabric'
-CPD_URL = 'https://datafabric.ibmcloudpack.com:12864'
+CPD_USER_NAME =  config("WKCUSER")
+CPD_USER_PASSWORD =  config("PASSWORD")
+CPD_URL =  config("TZHOSTNAME")
 
  
 version_r = get_ipython().getoutput('cpdctl version')
