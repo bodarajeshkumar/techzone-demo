@@ -14,28 +14,29 @@
 # In[1]:
 
 
-import base64
+# import base64
 import json
 import os
-import platform
-import requests
-import tarfile
-import zipfile
-from IPython.core.display import display, HTML
+# import platform
+# import requests
+# import tarfile
+# import zipfile
+# from IPython.core.display import display, HTML
 from decouple import config
 
 # ## CPD Credentials
 
 # In[2]:
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+CPD_USER_NAME =  config('WKCUSER')
+CPD_USER_PASSWORD =  config('PASSWORD')
+CPD_URL =  config('TZHOSTNAME')
 
-CPD_USER_NAME =  config("WKCUSER")
-CPD_USER_PASSWORD =  config("PASSWORD")
-CPD_URL =  config("TZHOSTNAME")
+version_r = os.popen('cpdctl version').read()
 
- 
-version_r = get_ipython().getoutput('cpdctl version')
-CPDCTL_VERSION = version_r.s
+CPDCTL_VERSION = version_r
+CPDCTL_VERSION=CPDCTL_VERSION.strip()
 
 print("cpdctl version: {}".format(CPDCTL_VERSION))
 
@@ -46,8 +47,7 @@ print("cpdctl version: {}".format(CPDCTL_VERSION))
 
 # In[6]:
 
-
-get_ipython().system(' cpdctl config user set cpd_user --username {CPD_USER_NAME} --password {CPD_USER_PASSWORD}')
+os.system('cpdctl config user set cpd_user --username '+CPD_USER_NAME+ ' --password '+CPD_USER_PASSWORD)
 
 
 # Add "cpd" profile to the `cpdctl` configuration
@@ -55,7 +55,7 @@ get_ipython().system(' cpdctl config user set cpd_user --username {CPD_USER_NAME
 # In[7]:
 
 
-get_ipython().system(' cpdctl config profile set cpd --url {CPD_URL} --user cpd_user')
+os.system(' cpdctl config profile set cpd --url ' +CPD_URL+' --user cpd_user')
 
 
 # Add "cpd" context to the `cpdctl` configuration
@@ -63,7 +63,7 @@ get_ipython().system(' cpdctl config profile set cpd --url {CPD_URL} --user cpd_
 # In[8]:
 
 
-get_ipython().system(' cpdctl config context set cpd --profile cpd --user cpd_user')
+os.system(' cpdctl config context set cpd --profile cpd --user cpd_user')
 
 
 # List available contexts
@@ -71,13 +71,13 @@ get_ipython().system(' cpdctl config context set cpd --profile cpd --user cpd_us
 # In[9]:
 
 
-get_ipython().system(' cpdctl config context list')
+os.system(' cpdctl config context list')
 
 
 # In[10]:
 
 
-get_ipython().system(' cpdctl config context use cpd')
+os.system(' cpdctl config context use cpd')
 
 
 # List available projects in current context
@@ -85,7 +85,7 @@ get_ipython().system(' cpdctl config context use cpd')
 # In[11]:
 
 
-get_ipython().system(' cpdctl project list')
+os.system(' cpdctl project list')
 
 
 # ### Access the selected project assets
@@ -95,14 +95,14 @@ get_ipython().system(' cpdctl project list')
 # In[12]:
 
 
-result = get_ipython().getoutput("cpdctl project list --output json --raw-output --jmes-query 'resources[0].metadata.guid'")
-PROJECT_ID = result.s
+result = (os.popen("cpdctl project list --output json --raw-output --jmes-query 'resources[0].metadata.guid'")).read()
+PROJECT_ID = result
 
 
 # In[13]:
 
-
-get_ipython().system(' cpdctl project get --project-id {PROJECT_ID}')
+PROJECT_ID=PROJECT_ID.strip()
+os.system(' cpdctl project get --project-id '+PROJECT_ID)
 
 
 # Get project details in JSON format and extract it's name
@@ -110,26 +110,23 @@ get_ipython().system(' cpdctl project get --project-id {PROJECT_ID}')
 # In[14]:
 
 
-get_ipython().system(' cpdctl project get --project-id {PROJECT_ID} --output json')
+os.system(' cpdctl project get --project-id '+PROJECT_ID+' --output json')
 
 
 # In[15]:
 
 
-result = get_ipython().getoutput('cpdctl project get --project-id {PROJECT_ID} --output json --jmes-query "entity.name" --raw-output')
-PROJECT_NAME = result.s
-print("'{}' project ID is: {}".format(PROJECT_NAME, PROJECT_ID))
+result = os.popen('cpdctl project get --project-id '+PROJECT_ID+' --output json --jmes-query "entity.name" --raw-output').read()
+PROJECT_NAME = result
+print("{}project ID is: {}".format(PROJECT_NAME, PROJECT_ID))
 
 EXPORT = {
     "all_assets": True
 }
 EXPORT_JSON = json.dumps(EXPORT)
 print(EXPORT_JSON)
-result = get_ipython().getoutput('cpdctl asset export start --project-id {PROJECT_ID} --assets \'{EXPORT_JSON}\' --name demo-project-assets --output json --jmes-query "metadata.id" --raw-output')
-EXPORT_ID = result.s
+result = os.popen('cpdctl asset export start --project-id '+PROJECT_ID+ ' --assets \''+EXPORT_JSON+'\' --name demo-project-assets --output json --jmes-query "metadata.id" --raw-output').read()
+EXPORT_ID = result
 print('Export ID: {}'.format(EXPORT_ID))
-
-get_ipython().system('cpdctl asset export download --project-id {PROJECT_ID} --export-id {EXPORT_ID} --output-file project-assets.zip --progress')
-
-
-
+EXPORT_ID=EXPORT_ID.strip()
+os.system('cpdctl asset export download --project-id '+PROJECT_ID+' --export-id '+EXPORT_ID+' --output-file project-assets.zip --progress')
