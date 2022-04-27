@@ -18,7 +18,7 @@ if  [ -n "$KUBEADMIN_USER" ] && [ -n "$KUBEADMIN_PASS" ]
     else
         if  [ -z "$API_TOKEN" ]
             then
-                    exit 1;
+                    echo "Invalid api token, please check env.sh file";
             else
                 alias pod_login="oc login --token=${API_TOKEN} --server=${SERVER}";
                 alias oclogin_auto="run_utils login-to-ocp --token=${API_TOKEN} --server=${SERVER}";
@@ -32,7 +32,6 @@ if [ $? -eq 0 ]; then
     echo "Logged in Successfully";
 else
     echo "Login Failed";
-    exit 1;
 fi
 
 
@@ -40,6 +39,8 @@ fi
 export PROJECT_NAME='olm-utils'
 oc create namespace ${PROJECT_NAME}
 oc project ${PROJECT_NAME}
+oc create serviceaccount olm-utils-sa
+oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:olm-utils:olm-utils-sa
 oc apply -f deployment.yaml
 
 # # Setting the aliases

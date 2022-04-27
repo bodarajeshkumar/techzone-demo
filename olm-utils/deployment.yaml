@@ -11,3 +11,4 @@ spec:
         - containerPort: 3100
       securityContext:
         privileged: true
+  serviceAccount: olm-utils-sa
