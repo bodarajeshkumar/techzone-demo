@@ -1,12 +1,17 @@
 #!/bin/sh
 SERVER=
 
+# APITOKEN
+API_TOKEN=
+
+# OR
+
 # Username and password
 KUBEADMIN_USER=
 KUBEADMIN_PASS=
-# OR
-# APITOKEN
-API_TOKEN=
+
+# ICR KEY
+ICR_KEY=
 
 
 # SCRIPT
@@ -49,4 +54,9 @@ alias oclogin="run_utils login-to-ocp";
 alias get_pods="kubectl get pods -n $PROJECT_NAME";
 # alias oclogin_auto="run_utils login-to-ocp --token=${API_TOKEN} --server=${SERVER}"
 alias get_preview="kubectl cp $PROJECT_NAME/$PROJECT_NAME:/tmp/work/preview.sh ${CHE_PROJECTS_ROOT}/techzone-demo/olm-utils/preview.sh"
+
+if  [ -n "$ICR_KEY" ]
+then
+    run_utils add_icr_cred_to_global_pull_secret.sh $ICR_KEY
+fi
 
