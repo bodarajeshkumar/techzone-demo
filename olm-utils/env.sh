@@ -11,6 +11,7 @@ KUBEADMIN_USER=
 KUBEADMIN_PASS=
 
 # ICR KEY
+# Please enter the ICR KEY if the server value is pointing to IBM cloud ROKS cluster.
 ICR_KEY=
 
 
