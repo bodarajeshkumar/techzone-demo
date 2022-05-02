@@ -85,7 +85,7 @@ os.system('cpdctl config context use cpd')
 
 # In[11]:
 
-#####################Function to select a Project from existing#####################
+#####################Function to select an existing project#####################
 def existing_projects():
     options = []
     service_info = {}
@@ -93,20 +93,20 @@ def existing_projects():
     # print(data)
     entries=data['total_results']
     # print(entries)
-    if(entries>1):
+    if(entries>1): #incase there are more than one existing project
         for i in range(0,len(data)):
+            #########creating list of existing projects#########
             options.append(data['resources'][i]['entity']['name'])
             service_info[i] = {
                 "name": data['resources'][i]['entity']['name'],
                 "guid": data['resources'][i]['metadata']['guid']
             }
-
+        #########Printing the menu in the terminal#########
         terminal_menu = TerminalMenu(options,title = "\nSelect a Project to export\n", menu_cursor_style = ("fg_cyan", "bold"), menu_highlight_style =("bold",))
         menu_entry_index = terminal_menu.show()
-        return service_info[menu_entry_index]['guid']
-    else:
-        return data['resources'][0]['metadata']['guid']
-
+        return service_info[menu_entry_index]['guid']  # return guid of selected project
+    else: #incase there is only one existing project 
+        return data['resources'][0]['metadata']['guid']  # return guid of the single existing project
 #####################End of function existing_projects#####################
 
 
