@@ -23,6 +23,8 @@ import os
 # import zipfile
 # from IPython.core.display import display, HTML
 from decouple import config
+from simple_term_menu import TerminalMenu
+
 
 # ## CPD Credentials
 
@@ -55,7 +57,7 @@ os.system('cpdctl config user set cpd_user --username '+CPD_USER_NAME+ ' --passw
 # In[7]:
 
 
-os.system(' cpdctl config profile set cpd --url ' +CPD_URL+' --user cpd_user')
+os.system('cpdctl config profile set cpd --url ' +CPD_URL+' --user cpd_user')
 
 
 # Add "cpd" context to the `cpdctl` configuration
@@ -63,40 +65,60 @@ os.system(' cpdctl config profile set cpd --url ' +CPD_URL+' --user cpd_user')
 # In[8]:
 
 
-os.system(' cpdctl config context set cpd --profile cpd --user cpd_user')
+os.system('cpdctl config context set cpd --profile cpd --user cpd_user')
 
 
 # List available contexts
 
 # In[9]:
 
-
-os.system(' cpdctl config context list')
+os.system('cpdctl config context list')
 
 
 # In[10]:
 
 
-os.system(' cpdctl config context use cpd')
+os.system('cpdctl config context use cpd')
 
 
 # List available projects in current context
 
 # In[11]:
 
+#####################Function to select a Project from existing#####################
+def existing_projects():
+    options = []
+    service_info = {}
+    data = json.loads(os.popen("cpdctl project list --output json").read())
+    # print(data)
+    entries=data['total_results']
+    # print(entries)
+    if(entries>1):
+        for i in range(0,len(data)):
+            options.append(data['resources'][i]['entity']['name'])
+            service_info[i] = {
+                "name": data['resources'][i]['entity']['name'],
+                "guid": data['resources'][i]['metadata']['guid']
+            }
 
-os.system(' cpdctl project list')
+        terminal_menu = TerminalMenu(options,title = "\nSelect a Project to export\n", menu_cursor_style = ("fg_cyan", "bold"), menu_highlight_style =("bold",))
+        menu_entry_index = terminal_menu.show()
+        return service_info[menu_entry_index]['guid']
+    else:
+        return data['resources'][0]['metadata']['guid']
+
+#####################End of function existing_projects#####################
 
 
-# ### Access the selected project assets
+
+## Access the selected project assets
 
 # Get cpdctl-demo project ID and show details
 
 # In[12]:
 
-
-result = (os.popen("cpdctl project list --output json --raw-output --jmes-query 'resources[0].metadata.guid'")).read()
-PROJECT_ID = result
+PROJECT_ID=existing_projects()   #function call to list the existing projects and returning the selected project guid
+# print(PROJECT_ID)
 
 
 # In[13]:
