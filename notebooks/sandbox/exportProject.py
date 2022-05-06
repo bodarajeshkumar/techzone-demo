@@ -24,7 +24,7 @@ import os
 # from IPython.core.display import display, HTML
 from decouple import config
 from simple_term_menu import TerminalMenu
-
+import sys
 
 # ## CPD Credentials
 
@@ -86,40 +86,51 @@ os.system('cpdctl config context use cpd')
 # In[11]:
 
 #####################Function to select an existing project#####################
-def existing_projects():
-    options = []
-    service_info = {}
-    data = json.loads(os.popen("cpdctl project list --output json").read())
-    # print(data)
-    entries=data['total_results']
-    # print(entries)
-    if(entries>1): #incase there are more than one existing project
-        for i in range(0,len(data)):
-            #########creating list of existing projects#########
-            options.append(data['resources'][i]['entity']['name'])
-            service_info[i] = {
-                "name": data['resources'][i]['entity']['name'],
-                "guid": data['resources'][i]['metadata']['guid']
-            }
-        #########Printing the menu in the terminal#########
-        terminal_menu = TerminalMenu(options,title = "\nSelect a Project to export\n", menu_cursor_style = ("fg_cyan", "bold"), menu_highlight_style =("bold",))
-        menu_entry_index = terminal_menu.show()
+def existing_projects(options, service_info):
+    #########Printing the menu in the terminal#########
+    terminal_menu = TerminalMenu(options,title = "Select a project to export. Use Keyboard keys to select.", menu_cursor_style = ("fg_cyan", "bold"), menu_highlight_style =("bold",))
+    menu_entry_index = terminal_menu.show()
+    print("The Project "+ service_info[menu_entry_index]['name']+" having Project ID "+service_info[menu_entry_index]['guid']+" will be Exported.\nDo you want to continue?(Y/N)")
+    confirm=input()
+    if(confirm=="Y" or confirm=="y"):
         return service_info[menu_entry_index]['guid']  # return guid of selected project
-    else: #incase there is only one existing project 
-        return data['resources'][0]['metadata']['guid']  # return guid of the single existing project
+    elif(confirm=="N" or confirm=="n"):
+        optionsNo = ["Want to select a different existing project", "Exit from the Menu"]
+        terminal_menu_No = TerminalMenu(optionsNo,title = "Select the next step. Use Keyboard keys to select.", menu_cursor_style = ("fg_cyan", "bold"), menu_highlight_style =("bold",))
+        menu_entry_index_No = terminal_menu_No.show()
+        if(menu_entry_index_No==0):
+            return existing_projects(options, service_info)
+        else:
+            return 0
+
 #####################End of function existing_projects#####################
-
-
 
 ## Access the selected project assets
 
 # Get cpdctl-demo project ID and show details
 
 # In[12]:
+options = []
+service_info = {}
+data = json.loads(os.popen("cpdctl project list --output json").read())
 
-PROJECT_ID=existing_projects()   #function call to list the existing projects and returning the selected project guid
+entries=data['total_results']
+# print(data)
+for i in range(0,entries):
+    #########creating list of existing projects#########
+    options.append(data['resources'][i]['entity']['name'])
+    # print(options.append(data['resources'][i]['entity']['name']))
+    service_info[i] = {
+        "name": data['resources'][i]['entity']['name'],
+        "guid": data['resources'][i]['metadata']['guid']
+    }
+    options[i]+=" ("+data['resources'][i]['metadata']['guid']+")"
+# print(service_info)
+PROJECT_ID=existing_projects(options, service_info)   #function call to list the existing projects and returning the selected project guid
 # print(PROJECT_ID)
-
+if(PROJECT_ID==0):
+    print("####################################\n\tNo Project Selected!!\n Please Select a Project to Export\n####################################")
+    sys.exit()
 
 # In[13]:
 
